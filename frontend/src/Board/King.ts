@@ -1,16 +1,28 @@
 import { Piece } from "./Piece";
 import WhiteKing from '../Assets/WhiteKing.png';
 import BlackKing from '../Assets/BlackKing.png';
+import { Chessboard } from "./Chessboard";
 
 export class King extends Piece {
 
-    name: string;
-    img: string;
+    constructor(row: number, col: number, side: string, name: string, chessboard: Chessboard) {
 
-    constructor(row: number, col: number, side: string, name: string) {
+        super(row, col, side, name, (side === 'black') ? BlackKing : WhiteKing, chessboard);
+    }
 
-        super(row, col, side);
-        this.name = name;
-        this.img = (side === 'black') ? BlackKing : WhiteKing;
+    select() {
+        this.chessboard.Tiles.reset();
+
+        const row = this.row;
+        const col = this.col;
+      
+        this.chessboard.checkTile(this, row + 1, col);
+        this.chessboard.checkTile(this, row - 1, col);
+        this.chessboard.checkTile(this, row, col + 1);
+        this.chessboard.checkTile(this, row, col - 1);
+        this.chessboard.checkTile(this, row - 1, col - 1);
+        this.chessboard.checkTile(this, row - 1, col + 1);
+        this.chessboard.checkTile(this, row + 1, col - 1);
+        this.chessboard.checkTile(this, row + 1, col + 1);
     }
 }

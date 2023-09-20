@@ -10,23 +10,27 @@ import WhiteBishop from '../Assets/WhiteBishop.png';
 import WhiteKnight from '../Assets/WhiteKnight.png';
 import WhiteQueen from '../Assets/WhiteQueen.png';
 import WhiteRook from '../Assets/WhiteRook.png';
+import { Chessboard } from "./Chessboard";
+import { Piece } from "./Piece";
 
-interface Piece {
+/*interface Piece {
   row: number;
   col: number;
-  move: number;
-  img: string;
+  moves: number;
   alive: boolean;
   pinned: boolean;
-  name: string;
   id: number;
   side: string;
   attack: { row: number; col: number }[];
   enpassant: boolean;
-}
+  img: string;
+  name: string;
+  chessboard: Chessboard;
+}*/
 
-const tilesClass = new Tiles();
-const chessPieces = initialPieces;
+const chessboard = new Chessboard();
+const tilesClass = chessboard.Tiles;
+const chessPieces = chessboard.Pieces;
 
 const findPieceIndex = (row: number, col: number) => {
     if (row < 0 || row > 7)
@@ -39,10 +43,6 @@ const findPieceIndex = (row: number, col: number) => {
   }
   return -1;
 };
-
-function findPieceById(id: number): Piece | undefined {
-    return initialPieces.find(piece => piece.id === id);
-  }
 
 function selectPawn(pawn: Piece) {
   tilesClass.reset();
@@ -64,7 +64,7 @@ function selectPawn(pawn: Piece) {
     const side_two = findPieceIndex(pawn.row + 1, pawn.col + 1);
     if (side_two !== -1 && chessPieces[side_two].side !== pawn.side)
         tilesClass.setAttacked(pawn.row + 1, pawn.col + 1);
-    if (pawn.move === 0) {
+    if (pawn.moves === 0) {
       for (let i = 1; i <= 2; i++) {
         if (findPieceIndex(pawn.row + i, pawn.col) !== -1) break;
         tilesClass.setAvailable(pawn.row + i, pawn.col);
@@ -90,7 +90,7 @@ function selectPawn(pawn: Piece) {
     const side_two = findPieceIndex(pawn.row - 1, pawn.col + 1)
     if (side_two !== -1 && chessPieces[side_two].side !== pawn.side)
         tilesClass.setAttacked(pawn.row - 1, pawn.col + 1);
-    if (pawn.move === 0) {
+    if (pawn.moves === 0) {
       for (let i = -1; i >= -2; i--) {
         if (findPieceIndex(pawn.row + i, pawn.col) !== -1) break;
         tilesClass.setAvailable(pawn.row + i, pawn.col);
@@ -296,12 +296,13 @@ export default function Board(): React.ReactElement {
       console.log(`${selectedPiece.name} ${selectedPiece.id}`);
 
       tilesClass.setStart(selectedPiece.row, selectedPiece.col);
-      if (selectedPiece.name === "pawn") selectPawn(selectedPiece);
+      /*if (selectedPiece.name === "pawn") selectPawn(selectedPiece);
       else if (selectedPiece.name === "rook") selectRook(selectedPiece);
       else if (selectedPiece.name === "bishop") selectBishop(selectedPiece);
       else if (selectedPiece.name === "queen") selectQueen(selectedPiece);
       else if (selectedPiece.name === "king") selectKing(selectedPiece);
-      else if (selectedPiece.name === "knight") selectKnight(selectedPiece);
+      else if (selectedPiece.name === "knight") selectKnight(selectedPiece);*/
+      selectedPiece.select();
       setRender(!render);
     }
   }, [selectedPiece]);
@@ -338,7 +339,7 @@ export default function Board(): React.ReactElement {
         }
       }
       if (piece.name === 'pawn') {
-        if (piece.move === 0) {
+        if (piece.moves === 0) {
             const dist = selectedPos.row - piece.row;
             if (dist === 2 || dist === -2) {
                 piece.enpassant = true;
@@ -349,7 +350,7 @@ export default function Board(): React.ReactElement {
       }
       piece.row = selectedPos.row;
       piece.col = selectedPos.col;
-      piece.move++;
+      piece.moves++;
       if (selectedPiece.name === "pawn") selectPawn(selectedPiece);
       else if (selectedPiece.name === "rook") selectRook(selectedPiece);
       else if (selectedPiece.name === "bishop") selectBishop(selectedPiece);
