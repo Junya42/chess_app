@@ -3,8 +3,6 @@ import '../App.css'
 
 export default function Navbar() : React.ReactElement {
 
-
-
     return (
         <div className="nav">
             <h1>Home</h1>
