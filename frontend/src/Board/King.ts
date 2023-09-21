@@ -20,23 +20,13 @@ export class King extends Piece {
         const row = this.row;
         const col = this.col;
       
-        if (this.pinned !== DIRECTION.CLEAR)
-            console.log("XXXXXXXXXXXX");
-        if (this.chessboard.checkTile(this, row + 1, col) !== -2)
-            console.log("KING DOWN");
-        if (this.chessboard.checkTile(this, row - 1, col) !== -2)
-            console.log("KING UP");
-        if (this.chessboard.checkTile(this, row, col + 1) !== -2)
-            console.log("KING RIGHT");
-        if (this.chessboard.checkTile(this, row, col - 1) !== -2)
-            console.log("KING LEFT");
-        if (this.chessboard.checkTile(this, row - 1, col - 1) !== -2)
-            console.log("KING TOP LEFT");
-        if (this.chessboard.checkTile(this, row - 1, col + 1) !== -2)
-            console.log("KING TOP RIGHT");
-        if (this.chessboard.checkTile(this, row + 1, col - 1) !== -2)
-            console.log("KING BOT LEFT");
-        if (this.chessboard.checkTile(this, row + 1, col + 1) !== -2)
-            console.log("KING BOT RIGHT");
+        this.chessboard.checkTile(this, row + 1, col);
+        this.chessboard.checkTile(this, row - 1, col);
+        this.chessboard.checkTile(this, row, col + 1);
+        this.chessboard.checkTile(this, row, col - 1);
+        this.chessboard.checkTile(this, row - 1, col - 1);
+        this.chessboard.checkTile(this, row - 1, col + 1);
+        this.chessboard.checkTile(this, row + 1, col - 1);
+        this.chessboard.checkTile(this, row + 1, col + 1);
     }
 }

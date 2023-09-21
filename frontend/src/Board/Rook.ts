@@ -40,6 +40,8 @@ export class Rook extends Piece {
       if (idx > -1) {
         if (!first) {
           first = this.chessboard.Pieces[idx];
+          if (first.side === this.side)
+            return ;
           if (first.name === "king" && first.side !== this.side) {
             first.pinned = DIRECTION.VERTICAL;
             first.pinnedBy = this;
@@ -54,7 +56,8 @@ export class Rook extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -76,6 +79,8 @@ export class Rook extends Piece {
       if (idx > -1) {
         if (!first) {
           first = this.chessboard.Pieces[idx];
+          if (first.side === this.side)
+            return ;
           if (first.name === "king" && first.side !== this.side) {
             first.pinned = DIRECTION.VERTICAL;
             first.pinnedBy = this;
@@ -90,7 +95,8 @@ export class Rook extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -112,6 +118,8 @@ export class Rook extends Piece {
       if (idx > -1) {
         if (!first) {
           first = this.chessboard.Pieces[idx];
+          if (first.side === this.side)
+            return ;
           if (first.name === "king" && first.side !== this.side) {
             first.pinned = DIRECTION.HORIZONTAL;
             first.pinnedBy = this;
@@ -126,7 +134,8 @@ export class Rook extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -162,7 +171,8 @@ export class Rook extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+        return ;
     }
   }
 
@@ -173,13 +183,21 @@ export class Rook extends Piece {
 
     this.attack = [];
 
+    this.canMove = false;
+
+
     if (this.pinned === DIRECTION.VERTICAL || this.pinned === DIRECTION.CLEAR)
       this.up();
+
+
     if (this.pinned === DIRECTION.VERTICAL || this.pinned === DIRECTION.CLEAR)
       this.down();
+
     if (this.pinned === DIRECTION.HORIZONTAL || this.pinned === DIRECTION.CLEAR)
       this.left();
+
     if (this.pinned === DIRECTION.HORIZONTAL || this.pinned === DIRECTION.CLEAR)
       this.right();
+
   }
 }

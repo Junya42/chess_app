@@ -36,11 +36,11 @@ export class Chessboard {
       new Pawn(1, 6, "black", "pawn", this),
       new Pawn(1, 7, "black", "pawn", this),
 
+      new King(7, 4, "white", "king", this),
       new Rook(7, 0, "white", "rook", this),
       new Knight(7, 1, "white", "knight", this),
       new Bishop(7, 2, "white", "bishop", this),
       new Queen(7, 3, "white", "queen", this),
-      new King(7, 4, "white", "king", this),
       new Bishop(7, 5, "white", "bishop", this),
       new Knight(7, 6, "white", "knight", this),
       new Rook(7, 7, "white", "rook", this),
@@ -53,13 +53,6 @@ export class Chessboard {
       new Pawn(6, 6, "white", "pawn", this),
       new Pawn(6, 7, "white", "pawn", this)
 
-      /*new King(1, 7, "white", "king", this),
-      new Rook(2, 0, "white", "rook", this),
-
-      new Rook(7, 6, "black", "rook", this),
-      new Rook(6, 5, "black", "rook", this),
-      new Queen(7, 1, "black", "queen", this),
-      new King(7, 3, "black", "king", this),*/
     ];
 
     let WKing: Piece | null = null;
@@ -76,8 +69,6 @@ export class Chessboard {
     this.White = this.Pieces.filter((piece: Piece) => piece.side === "white");
     this.Black = this.Pieces.filter((piece: Piece) => piece.side === "black");
 
-    console.log(this.WKing);
-    console.log(this.BKing);
   }
 
   /**
@@ -125,6 +116,15 @@ export class Chessboard {
     if (side === 'white')
       return this.White;
     return this.Black;
+  }
+
+  checkmate(side: string) {
+    const movablePieces = this.getPiecesBySide(side).filter((piece: Piece) => piece.alive === true && piece.canMove === true);
+
+    if (movablePieces === null || movablePieces === undefined || movablePieces.length === 0)
+      return true;
+    //console.log(`side: ${side}`, movablePieces);
+    return false;
   }
 
   getKingBySide(side: string) {
@@ -176,15 +176,16 @@ export class Chessboard {
       return -2;
     }
 
+    if (first === 0 || first === 1) piece.attack.push({ row, col });
+    const idx = this.findPieceIndex(row, col);
+    if (idx > -1 && this.Pieces[idx].alive === true && this.Pieces[idx].side === piece.side)
+      return -3;
     const king = this.getKing(piece);
 
     if (king && piece != king && king.pinned) {
+
       if (this.findPinPosition(king.pin, row, col) === -1) return -2;
     }
-    const idx = this.findPieceIndex(row, col);
-
-    if (first === 0 || first === 1) piece.attack.push({ row, col });
-
     if (piece.name === "king") {
       const enemyPieces: Piece[] = this.Pieces.filter(
         (enemyPiece: Piece) => enemyPiece.side !== piece.side
@@ -202,14 +203,20 @@ export class Chessboard {
       }
 
       if (freeTile === false) {
-        return idx;
+        return -2;
       }
     }
 
     if (idx === -1) {
-      if (first === 0) this.Tiles.setAvailable(row, col);
+      if (first === 0) {
+        this.Tiles.setAvailable(row, col);
+        piece.canMove = true;
+      }
     } else if (this.Pieces[idx].side !== piece.side) {
-      if (first === 0) this.Tiles.setAvailable(row, col);
+      if (first === 0) {
+        this.Tiles.setAvailable(row, col);
+        piece.canMove = true;
+      }
     }
 
     return idx;

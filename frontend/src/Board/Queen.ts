@@ -54,7 +54,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -90,7 +91,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -126,7 +128,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -162,7 +165,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -200,7 +204,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -242,7 +247,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -283,7 +289,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 
@@ -324,7 +331,8 @@ export class Queen extends Piece {
           }
           break;
         }
-      }
+      } else if (idx === -3)
+      return ;
     }
   }
 

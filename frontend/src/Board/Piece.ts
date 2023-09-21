@@ -4,6 +4,7 @@ import { DIRECTION } from "./Direction";
 export class Piece {
   row: number;
   col: number;
+  canMove: boolean;
   moves: number;
   alive: boolean;
   pinned: number;
@@ -27,6 +28,7 @@ export class Piece {
   ) {
     this.row = row;
     this.col = col;
+    this.canMove = false;
     this.moves = 0;
     this.alive = true;
     this.pinned = DIRECTION.CLEAR;

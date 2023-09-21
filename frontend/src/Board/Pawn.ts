@@ -29,6 +29,8 @@ export class Pawn extends Piece {
 
     const King = this.chessboard.getKing(this);
 
+    let add = 0;
+
     if (this.side === "black") {
       this.attack = [
         { row: this.row + 1, col: this.col - 1 },
@@ -51,9 +53,14 @@ export class Pawn extends Piece {
               this.row + 1,
               this.col - 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setEnPassant(this.row + 1, this.col - 1);
-        } else this.chessboard.Tiles.setEnPassant(this.row + 1, this.col - 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setEnPassant(this.row + 1, this.col - 1);
+          this.canMove = true;
+        }
       const side_one = this.chessboard.findPieceIndex(
         this.row + 1,
         this.col - 1
@@ -69,9 +76,14 @@ export class Pawn extends Piece {
               this.row + 1,
               this.col - 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setAttacked(this.row + 1, this.col - 1);
-        } else this.chessboard.Tiles.setAttacked(this.row + 1, this.col - 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setAttacked(this.row + 1, this.col - 1);
+          this.canMove = true;
+        }
       const passant_two = this.chessboard.findPieceIndex(
         this.row,
         this.col + 1
@@ -89,9 +101,14 @@ export class Pawn extends Piece {
               this.row + 1,
               this.col + 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setEnPassant(this.row + 1, this.col + 1);
-        } else this.chessboard.Tiles.setEnPassant(this.row + 1, this.col + 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setEnPassant(this.row + 1, this.col + 1);
+          this.canMove = true;
+        }
       const side_two = this.chessboard.findPieceIndex(
         this.row + 1,
         this.col + 1
@@ -107,9 +124,14 @@ export class Pawn extends Piece {
               this.row + 1,
               this.col + 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setAttacked(this.row + 1, this.col + 1);
-        } else this.chessboard.Tiles.setAttacked(this.row + 1, this.col + 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setAttacked(this.row + 1, this.col + 1);
+          this.canMove = true;
+        }
       if (this.moves === 0) {
         for (let i = 1; i <= 2; i++) {
           if (this.chessboard.findPieceIndex(this.row + i, this.col) !== -1)
@@ -121,9 +143,14 @@ export class Pawn extends Piece {
                 this.row + i,
                 this.col
               ) !== -1
-            )
+            ) {
               this.chessboard.Tiles.setAvailable(this.row + i, this.col);
-          } else this.chessboard.Tiles.setAvailable(this.row + i, this.col);
+              this.canMove = true;
+            }
+          } else {
+            this.chessboard.Tiles.setAvailable(this.row + i, this.col);
+            this.canMove = true;
+          }
         }
       } else {
         if (this.chessboard.findPieceIndex(this.row + 1, this.col) === -1) {
@@ -134,9 +161,14 @@ export class Pawn extends Piece {
                 this.row + 1,
                 this.col
               ) !== -1
-            )
+            ) {
               this.chessboard.Tiles.setAvailable(this.row + 1, this.col);
-          } else this.chessboard.Tiles.setAvailable(this.row + 1, this.col);
+              this.canMove = true;
+            }
+          } else {
+            this.chessboard.Tiles.setAvailable(this.row + 1, this.col);
+            this.canMove = true;
+          }
         }
       }
     } else {
@@ -161,9 +193,14 @@ export class Pawn extends Piece {
               this.row - 1,
               this.col - 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setEnPassant(this.row - 1, this.col - 1);
-        } else this.chessboard.Tiles.setEnPassant(this.row - 1, this.col - 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setEnPassant(this.row - 1, this.col - 1);
+          this.canMove = true;
+        }
       const passant_two = this.chessboard.findPieceIndex(
         this.row,
         this.col + 1
@@ -181,9 +218,14 @@ export class Pawn extends Piece {
               this.row - 1,
               this.col + 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setEnPassant(this.row - 1, this.col + 1);
-        } else this.chessboard.Tiles.setEnPassant(this.row - 1, this.col + 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setEnPassant(this.row - 1, this.col + 1);
+          this.canMove = true;
+        }
       const side_one = this.chessboard.findPieceIndex(
         this.row - 1,
         this.col - 1
@@ -199,9 +241,14 @@ export class Pawn extends Piece {
               this.row - 1,
               this.col - 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setAttacked(this.row - 1, this.col - 1);
-        } else this.chessboard.Tiles.setAttacked(this.row - 1, this.col - 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setAttacked(this.row - 1, this.col - 1);
+          this.canMove = true;
+        }
       const side_two = this.chessboard.findPieceIndex(
         this.row - 1,
         this.col + 1
@@ -217,9 +264,14 @@ export class Pawn extends Piece {
               this.row - 1,
               this.col + 1
             ) !== -1
-          )
+          ) {
             this.chessboard.Tiles.setAttacked(this.row - 1, this.col + 1);
-        } else this.chessboard.Tiles.setAttacked(this.row - 1, this.col + 1);
+            this.canMove = true;
+          }
+        } else {
+          this.chessboard.Tiles.setAttacked(this.row - 1, this.col + 1);
+          this.canMove = true;
+        }
       if (this.moves === 0) {
         for (let i = -1; i >= -2; i--) {
           if (this.chessboard.findPieceIndex(this.row + i, this.col) !== -1)
@@ -231,9 +283,14 @@ export class Pawn extends Piece {
                 this.row + i,
                 this.col
               ) !== -1
-            )
+            ) {
               this.chessboard.Tiles.setAvailable(this.row + i, this.col);
-          } else this.chessboard.Tiles.setAvailable(this.row + i, this.col);
+              this.canMove = true;
+            }
+          } else {
+            this.chessboard.Tiles.setAvailable(this.row + i, this.col);
+            this.canMove = true;
+          }
         }
       } else {
         if (this.chessboard.findPieceIndex(this.row - 1, this.col) === -1) {
@@ -244,9 +301,14 @@ export class Pawn extends Piece {
                 this.row - 1,
                 this.col
               ) !== -1
-            )
+            ) {
               this.chessboard.Tiles.setAvailable(this.row - 1, this.col);
-          } else this.chessboard.Tiles.setAvailable(this.row - 1, this.col);
+              this.canMove = true;
+            }
+          } else {
+            this.chessboard.Tiles.setAvailable(this.row - 1, this.col);
+            this.canMove = true;
+          }
         }
       }
     }

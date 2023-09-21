@@ -27,6 +27,8 @@ export class Knight extends Piece {
 
     this.chessboard.Tiles.setStart(this.row, this.col);
 
+    this.canMove = false;
+    
     this.chessboard.checkTile(this, this.row - 2, this.col + 1);
     this.chessboard.checkTile(this, this.row - 1, this.col + 2);
     this.chessboard.checkTile(this, this.row + 1, this.col + 2);

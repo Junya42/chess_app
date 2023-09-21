@@ -4,6 +4,8 @@ import { Chessboard } from "./Chessboard";
 import { Piece } from "./Piece";
 import UpgradeModal from "./UpgradeModal";
 import { DIRECTION } from "./Direction";
+import { createSecureServer } from "http2";
+import ResetModal from "./ResetModal";
 
 const chessboard = new Chessboard();
 const tilesClass = chessboard.Tiles;
@@ -19,24 +21,40 @@ export default function Board(): React.ReactElement {
   } | null>(null);
   const [render, setRender] = useState<boolean>(false);
   const [turn, setTurn] = useState<string>("white");
+  const [checkmate, setCheckmate] = useState<boolean>(false);
 
   useEffect(() => {
     //reset pieces status
 
-    if (chessboard.getKingBySide(turn)?.pinned !== DIRECTION.CLEAR) {
-      console.log("PINED");
-      
-    }
     for (const curr of chessPieces) {
       curr.pinned = DIRECTION.CLEAR;
+      curr.pin = null;
+      curr.pinnedBy = null;
+      curr.canMove = false;
     }
-    for (const curr of chessPieces) {
-      if (curr.side === turn) {
-        curr.enpassant = false;
+    if (turn === 'white') {
+      for (const curr of chessboard.Black) {
+        if (curr.alive)
+          curr.select();
       }
-      if (curr.alive)
-        curr.select();
+      for (const curr of chessboard.White) {
+        curr.enpassant = false;
+        if (curr.alive)
+          curr.select();
+      }
+    } else {
+      for (const curr of chessboard.White) {
+        if (curr.alive)
+          curr.select();
+      }
+      for (const curr of chessboard.Black) {
+        curr.enpassant = false;
+        if (curr.alive)
+          curr.select();
+      }
     }
+    if (chessboard.checkmate(turn) === true)
+      setCheckmate(true);
     tilesClass.reset();
   }, [turn]);
 
@@ -46,11 +64,9 @@ export default function Board(): React.ReactElement {
     if (selectedPiece) {
 
       tilesClass.setStart(selectedPiece.row, selectedPiece.col);
-      console.log(selectedPiece);
-      /*if (selectedPiece.name !== 'king' && chessboard.getKing(selectedPiece)?.pinned !== DIRECTION.CLEAR)
-        console.log("DEFEND YOUR KING");
-      else*/
-        selectedPiece.select();
+      //console.log(selectedPiece);
+
+      selectedPiece.select();
       setRender(!render);
     }
   }, [selectedPiece]);
@@ -77,7 +93,6 @@ export default function Board(): React.ReactElement {
       if (turn === "white") setTurn("black");
       else setTurn("white");
       setRender(!render);
-      console.log(`${piece.row} ${piece.col}`);
     }
   }, [selectedPiece, selectedPos, modal]);
 
@@ -144,6 +159,7 @@ export default function Board(): React.ReactElement {
             setModal={setModal}
             setSelectedPiece={setSelectedPiece}
           />
+          {checkmate && ResetModal()}
           {renderTiles()}
         </div>
       </div>
