@@ -97,6 +97,17 @@ export class Chessboard {
     return -1;
   };
 
+  findPiece = (row: number, col: number) => {
+    if (row < 0 || row > 7) return null;
+    for (let i = 0; i < this.Pieces.length; i++) {
+      const piece = this.Pieces[i];
+      if (piece.row === row && piece.col === col) {
+        return piece;
+      }
+    }
+    return null;
+  };
+
   findPieceById = (id: number) => {
     return this.Pieces.find((piece: Piece) => piece.id === id);
   };
@@ -107,8 +118,14 @@ export class Chessboard {
    * @returns {Piece[]}
    */
   getEnemies(piece: Piece) {
-    if (piece.side === "white") return this.Black;
-    return this.White;
+    if (piece.side === "white") {
+      if (this.Black)
+        return this.Black.filter((curr : Piece) => curr.alive === true);
+      return null;
+    }
+    if (this.White)
+      return this.White.filter((curr: Piece) => curr.alive === true);
+    return null;
   }
 
 
@@ -182,7 +199,7 @@ export class Chessboard {
       return -3;
     const king = this.getKing(piece);
 
-    if (king && piece != king && king.pinned) {
+    if (king && piece !== king && king.pinned) {
 
       if (this.findPinPosition(king.pin, row, col) === -1) return -2;
     }

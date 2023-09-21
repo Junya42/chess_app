@@ -89,6 +89,24 @@ export class Piece {
         modalcheck = true;
       }
     }
+    if (this.chessboard.Tiles.getColor(row, col) === "castle") {
+        
+        if (col < 4) {
+
+            const piece = this.chessboard.findPiece(row, 0);
+            if (piece) {
+                piece.col = col + 1;
+                piece.moves++;
+            }
+        } else {
+
+            const piece = this.chessboard.findPiece(row, 7);
+            if (piece) {
+                piece.col = col - 1;
+                piece.moves++;
+            }
+        }
+    }
     this.row = row;
     this.col = col;
     this.moves++;

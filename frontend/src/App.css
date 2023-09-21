@@ -171,6 +171,9 @@ color: white;
   background-color: #c7264f;
 }
 
+.castle {
+  background-color: #F5ECEA;
+}
 .footer {
   grid-area: 3 / 2 / 4 / 3;
   background-image: url('./Assets/bobby.png');

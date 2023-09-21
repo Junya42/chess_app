@@ -45,6 +45,12 @@ class Tiles {
         this.tileColors[row][col] = 'start';
     }
 
+    public setCastle(row: number, col: number): void {
+        if (row < 0 || row > 7)
+            return ;
+        this.tileColors[row][col] = 'castle';
+    }
+
     public reset(): void {
       this.tileColors = Array.from(this.originalColors, row => [...row]);
     }
