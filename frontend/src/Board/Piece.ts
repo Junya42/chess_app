@@ -1,14 +1,17 @@
 import { Chessboard } from "./Chessboard";
+import { DIRECTION } from "./Direction";
 
 export class Piece {
   row: number;
   col: number;
   moves: number;
   alive: boolean;
-  pinned: boolean;
+  pinned: number;
+  pinnedBy: Piece | null;
   id: number;
   side: string;
   attack: { row: number; col: number }[];
+  pin: { row: number; col: number}[] | null;
   enpassant: boolean;
   img: string;
   name: string;
@@ -26,22 +29,32 @@ export class Piece {
     this.col = col;
     this.moves = 0;
     this.alive = true;
-    this.pinned = false;
+    this.pinned = DIRECTION.CLEAR;
     this.id = row * 10 + col;
     this.attack = [];
+    this.pin = null;
     this.enpassant = false;
     this.side = side;
     this.name = name;
     this.img = img;
     this.chessboard = chessboard;
+    this.pinnedBy = null;
   }
 
+  /**
+ * Selects the chess piece and performs various actions related to the selection.
+ */
   select() {
     console.log(`Select ${this.name}`);
   }
 
+  /**
+   * This function moves a piece to a selected tile
+   * @param {number} row - Row position of the selected tile
+   * @param {number} col - Col Position of the selected tile
+   * @returns {boolean} True if a pawn get to promote
+   */
   move(row: number, col: number): boolean {
-
     let modalcheck = false;
     const idx = this.chessboard.findPieceIndex(row, col);
     if (idx !== -1) {
@@ -78,8 +91,5 @@ export class Piece {
     this.col = col;
     this.moves++;
     return modalcheck;
-    /* if (modalcheck === true)
-            setModal(piece);
-    */
   }
 }
