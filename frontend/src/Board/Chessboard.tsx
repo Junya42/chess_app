@@ -120,6 +120,20 @@ export class Chessboard {
     return this.White;
   }
 
+
+  getPiecesBySide(side: string) {
+    if (side === 'white')
+      return this.White;
+    return this.Black;
+  }
+
+  getKingBySide(side: string) {
+    
+    if (side === 'white')
+      return this.WKing;
+    return this.BKing;
+  }
+
   /**
    * This function returns your king
    * @param {Piece} piece - Your current piece
@@ -164,7 +178,7 @@ export class Chessboard {
 
     const king = this.getKing(piece);
 
-    if (king && king.pinned) {
+    if (king && piece != king && king.pinned) {
       if (this.findPinPosition(king.pin, row, col) === -1) return -2;
     }
     const idx = this.findPieceIndex(row, col);

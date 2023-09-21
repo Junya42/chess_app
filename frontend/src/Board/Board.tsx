@@ -23,8 +23,10 @@ export default function Board(): React.ReactElement {
   useEffect(() => {
     //reset pieces status
 
-    if (chessboard.WKing?.pinned !== DIRECTION.CLEAR)
+    if (chessboard.getKingBySide(turn)?.pinned !== DIRECTION.CLEAR) {
       console.log("PINED");
+      
+    }
     for (const curr of chessPieces) {
       curr.pinned = DIRECTION.CLEAR;
     }
