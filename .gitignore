@@ -44,3 +44,4 @@ lerna-debug.log*
 # DevContainer files
 
 .devcontainer/
+node_modules

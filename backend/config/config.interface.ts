@@ -1,7 +1,7 @@
 interface jwtProps {
-	jwtKey : string
+  jwtKey: string;
 }
 
 export interface ConfigProps {
-	jwt : jwtProps
+  jwt: jwtProps;
 }

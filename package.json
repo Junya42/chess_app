@@ -1,5 +1,7 @@
 {
   "devDependencies": {
+    "@nestjs/devtools-integration": "^0.1.5",
+    "nestjs-devtools-loader": "^1.1.0",
     "react-router-dom": "^6.16.0"
   }
 }
