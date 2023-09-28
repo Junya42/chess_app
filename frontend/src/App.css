@@ -24,11 +24,11 @@ color: white;
 
   margin-left: 1em;
   cursor: pointer;
+  transition: all .5s;
+
 }
 
 .nav h1:hover {
-
-    transition: all .5s;
     transform : translateX(10px);
 }
 
@@ -174,6 +174,7 @@ color: white;
 .castle {
   background-color: #F5ECEA;
 }
+
 .footer {
   grid-area: 3 / 2 / 4 / 3;
   background-image: url('./Assets/bobby.png');

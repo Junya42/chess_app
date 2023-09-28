@@ -4,8 +4,8 @@ import { Chessboard } from "./Chessboard";
 import { Piece } from "./Piece";
 import UpgradeModal from "./UpgradeModal";
 import { DIRECTION } from "./Direction";
-import { createSecureServer } from "http2";
 import ResetModal from "./ResetModal";
+
 
 const chessboard = new Chessboard();
 const tilesClass = chessboard.Tiles;
@@ -32,6 +32,7 @@ export default function Board(): React.ReactElement {
       curr.pinnedBy = null;
       curr.canMove = false;
     }
+
     if (turn === 'white') {
       for (const curr of chessboard.Black) {
         if (curr.alive)
