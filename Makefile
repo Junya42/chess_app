@@ -5,10 +5,21 @@ all:
 installf:
 	docker exec front npm install
 
+installb:
+	docker exec back npm install
+
+logs:
+	docker logs database &&\
+	docker logs back
+
+studio:
+	docker exec back npm run prisma:studio
+
 clean:
 	docker compose down
 
 fclean: clean
+	docker network rm chess_network
 	@docker system prune -af
 
-.PHONY: all
+.PHONY: all logs clean fclean installf installb studio

@@ -10,3 +10,37 @@ services:
       - '3001:3001'
     volumes:
       - ./frontend:/app
+    networks:
+      - chess_network
+
+  back:
+    build:
+      context: ./backend/
+      dockerfile: ./docker/Dockerfile
+    container_name: back
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./backend:/app
+    networks:
+      - chess_network
+
+  database:
+    container_name: database
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    image: postgres:14.7
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./chessapp_postgres:/var/lib/postgresql/data
+    networks:
+      chess_network:
+
+networks:
+  chess_network:
+    name: chess_network
+    driver: bridge
