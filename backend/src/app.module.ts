@@ -5,35 +5,19 @@ import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { config } from '../config/config';
 import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
 
-// @Module({
-//   imports: [
-// 	JwtModule.registerAsync({
-// 		imports : [ConfigModule],
-// 		useFactory : async (configService : ConfigService) => ({
-// 			global : true,
-// 			secret : configService.get<string>('jwt.jwtKey'),
-// 			signOptions: { expiresIn: '24h' }
-// 		}),
-// 		inject : [ConfigService]
-// 	}),
-// 	UserModule
-// ],
-//   controllers: [AppController],
-//   providers: [AppService],
-// })
-
-Module({
-  // 	imports: [
-  // 	  AuthModule,
-  // 	  UserModule,
-  // 	  ConfigModule.forRoot({
-  // 			isGlobal : true,
-  // 			load : [config],
-  // 	}),
-  //   ],
-  imports: [],
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
+    AuthModule,
+    UserModule,
+    PrismaModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
-});
+})
 export class AppModule {}

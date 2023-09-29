@@ -17,9 +17,7 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     console.log(
-      `je passe par le guard Auth, la clé de jwt est : ${this.configService.get<string>(
-        'jwt.jwtKey',
-      )}`,
+      `je passe par le guard Auth, la clé de jwt est : ${this.configService.get<string>('jwt.jwtKey')}`,
     );
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
@@ -28,7 +26,7 @@ export class AuthGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('jwt.jwtKey'),
+         secret: this.configService.get<string>('jwt.jwtKey'),
       });
       request['user'] = payload;
     } catch {
@@ -38,7 +36,7 @@ export class AuthGuard implements CanActivate {
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers['authorization'].split(' ') ?? [];
+    const [type, token] = request.headers['authorization']?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
 }
