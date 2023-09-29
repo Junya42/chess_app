@@ -13,11 +13,11 @@ export declare const loginUserSchemaByUsername: z.ZodObject<{
     username: z.ZodString;
     password: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    password: string;
     username: string;
+    password: string;
 }, {
-    password: string;
     username: string;
+    password: string;
 }>;
 export type LoginUserEmailDto = z.infer<typeof loginUserSchemaByMail>;
 export type LoginUserUsernameDto = z.infer<typeof loginUserSchemaByUsername>;

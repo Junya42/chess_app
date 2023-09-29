@@ -23,6 +23,7 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     createUser(newUser) {
+        console.log("Trying to create a user");
         return this.authService.createUser(newUser);
     }
     login(user) {

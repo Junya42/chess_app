@@ -15,6 +15,7 @@ export class AuthController {
   @Post('signup')
   @UsePipes(new ZodValidationPipe(createUserSchema))
   createUser(@Body() newUser: CreateUserDto) {
+	console.log("Trying to create a user");
     return this.authService.createUser(newUser);
   }
 

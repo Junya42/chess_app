@@ -19,7 +19,6 @@ clean:
 	docker compose down
 
 fclean: clean
-	docker network rm chess_network
 	@docker system prune -af
 
 .PHONY: all logs clean fclean installf installb studio
