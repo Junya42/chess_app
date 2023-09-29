@@ -17,12 +17,16 @@ const common_1 = require("@nestjs/common");
 const zod_pipe_1 = require("../../pipes/zod.pipe");
 const create_user_dto_1 = require("../user/dto/create-user.dto");
 const auth_service_1 = require("./auth.service");
+const login_user_dto_1 = require("../user/dto/login-user.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
     createUser(newUser) {
         return this.authService.createUser(newUser);
+    }
+    login(user) {
+        return this.authService.login(user);
     }
 };
 exports.AuthController = AuthController;
@@ -34,6 +38,17 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "createUser", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    (0, common_1.UsePipes)(new zod_pipe_1.ZodListValidationPipe([
+        login_user_dto_1.loginUserSchemaByMail,
+        login_user_dto_1.loginUserSchemaByUsername,
+    ])),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "login", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

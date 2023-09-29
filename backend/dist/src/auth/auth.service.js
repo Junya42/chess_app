@@ -11,13 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const user_service_1 = require("../user/user.service");
-const login_user_dto_1 = require("src/user/dto/login-user.dto");
 let AuthService = class AuthService {
     constructor(jwt, userService) {
         this.jwt = jwt;
@@ -29,6 +27,9 @@ let AuthService = class AuthService {
         return { access_token: await this.jwt.signAsync(payload) };
     }
     async login(user) {
+        const logUser = await this.userService.login(user);
+        const payload = { sub: logUser.id, username: logUser.username };
+        return { access_token: await this.jwt.signAsync(payload) };
     }
 };
 exports.AuthService = AuthService;
@@ -41,12 +42,11 @@ __decorate([
 __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_a = typeof login_user_dto_1.LoginUserDto !== "undefined" && login_user_dto_1.LoginUserDto) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthService.prototype, "login", null);
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [jwt_1.JwtService,
-        user_service_1.UserService])
+    __metadata("design:paramtypes", [jwt_1.JwtService, user_service_1.UserService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

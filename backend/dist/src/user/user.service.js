@@ -31,11 +31,33 @@ let UserService = class UserService {
             return newUser;
         }
         catch (error) {
+            console.log(error);
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.CONFLICT,
                 error: 'This email or username already in use',
             }, common_1.HttpStatus.CONFLICT, {
-                cause: error
+                cause: error,
+            });
+        }
+    }
+    async login(userInfo) {
+        const whereData = { password: userInfo.password };
+        if ('email' in userInfo)
+            whereData.email = userInfo.email;
+        else
+            whereData.username = userInfo.username;
+        try {
+            return this.prisma.user.findUniqueOrThrow({
+                where: whereData,
+                select: { id: true, username: true },
+            });
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.UNAUTHORIZED,
+                error: 'Invalid credentials',
+            }, common_1.HttpStatus.UNAUTHORIZED, {
+                cause: error,
             });
         }
     }
@@ -47,6 +69,12 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserService.prototype, "create", null);
+__decorate([
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserService.prototype, "login", null);
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService])

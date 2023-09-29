@@ -19,7 +19,6 @@ let AuthGuard = class AuthGuard {
         this.configService = configService;
     }
     async canActivate(context) {
-        console.log(`je passe par le guard Auth, la clé de jwt est : ${this.configService.get('jwt.jwtKey')}`);
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromHeader(request);
         if (!token) {
