@@ -1,15 +1,25 @@
 import React from "react";
-import '../App.css'
+import '../App.scss'
 
-export default function Navbar() : React.ReactElement {
+interface Props {
+    setPage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function Navbar({setPage}: Props) : React.ReactElement {
+
+    const pageChanger = (pageName: string) => {
+
+        setPage(pageName);
+    };
 
     return (
         <div className="nav">
-            <h1>Home</h1>
+            <button onClick={() => pageChanger("Home")}><h1>Home</h1></button>
             <ul>
-                <li>Ai</li>
-                <li>Matchmaking</li>
-                <li>Profile</li>
+                <button onClick={() => pageChanger("Ai")}><li>Ai</li></button>
+                <button onClick={() => pageChanger("Matchmaking")}><li>Matchmaking</li></button>
+                <button onClick={() => pageChanger("Board")}><li>Board</li></button>
+                <button onClick={() => pageChanger("Profile")}><li>Profile</li></button>
             </ul>
         </div>
     );
