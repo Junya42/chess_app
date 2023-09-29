@@ -45,3 +45,4 @@ lerna-debug.log*
 
 .devcontainer/
 node_modules
+/package-lock.json
