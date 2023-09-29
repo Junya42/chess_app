@@ -8,6 +8,10 @@ installf:
 installb:
 	docker exec back npm install
 
+migrate:
+	docker exec back npm run prisma:generate
+	docker exec back npm run prisma:apply-migration
+
 logs:
 	docker logs database &&\
 	docker logs back
