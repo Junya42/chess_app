@@ -6,10 +6,7 @@ import { LoginUserDto } from 'src/user/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwt: JwtService,
-    private userService: UserService,
-  ) {}
+  constructor(private jwt: JwtService, private userService: UserService) {}
 
   async createUser(@Body() newUser: CreateUserDto) {
     const user = await this.userService.create(newUser);
@@ -18,8 +15,8 @@ export class AuthService {
   }
 
   async login(@Body() user: LoginUserDto) {
-    // const logUser = await this.userService.login(user);
-    // const payload = { sub: logUser.id, username: logUser.username };
-    // return { access_token: await this.jwt.signAsync(payload) };
+    const logUser = await this.userService.login(user);
+    const payload = { sub: logUser.id, username: logUser.username };
+    return { access_token: await this.jwt.signAsync(payload) };
   }
 }

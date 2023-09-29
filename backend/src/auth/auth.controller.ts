@@ -1,16 +1,12 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-  UsePipes,
-} from '@nestjs/common';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ZodListValidationPipe, ZodValidationPipe } from 'pipes/zod.pipe';
 import { CreateUserDto, createUserSchema } from 'src/user/dto/create-user.dto';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
-import { LoginUserDto, loginUserSchemaByMail, loginUserSchemaByUsername } from 'src/user/dto/login-user.dto';
+import {
+  LoginUserDto,
+  loginUserSchemaByMail,
+  loginUserSchemaByUsername,
+} from 'src/user/dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -22,9 +18,14 @@ export class AuthController {
     return this.authService.createUser(newUser);
   }
 
-//   @Post('login')
-//   @UsePipes(new ZodListValidationPipe([loginUserSchemaByMail, loginUserSchemaByUsername]))
-//   login(@Body() user: LoginUserDto) {
-// 	return this.authService.login(user);
-//   }
+  @Post('login')
+  @UsePipes(
+    new ZodListValidationPipe([
+      loginUserSchemaByMail,
+      loginUserSchemaByUsername,
+    ]),
+  )
+  login(@Body() user: LoginUserDto) {
+    return this.authService.login(user);
+  }
 }
