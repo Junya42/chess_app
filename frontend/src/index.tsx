@@ -3,15 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react'
+import Auth from './Auth/Auth';
 
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: sessionStorage.getItem("access_token") == null ? <Auth /> : <App />
+	},
+	{
+		path: "/App",
+		element: <App />
+	}
+]);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
   <ChakraProvider>
-    <App />
+    <RouterProvider router={router} />
   </ChakraProvider>
 );
 

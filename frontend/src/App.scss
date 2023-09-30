@@ -1,23 +1,27 @@
-.App {
+.All {
+	height: 100%;
+}
 
+.App {
   display: grid;
   grid-template-columns: 180px 1fr;
   grid-template-rows: 80px 1fr 100px;
   height: 100%;
   overflow: hidden;
   font-family: sans-serif;
+  z-index: 1;
 }
 
 .nav {
   grid-area: 1 / 1 / 2 / 3;
-  background: rgb(22,22,22);
-  background: linear-gradient(90deg, rgba(22,22,22,1) 0%, rgba(42,42,42,1) 35%, rgba(44,46,46,1) 100%);
+  //background: rgb(22,22,22);
+  //background: linear-gradient(90deg, rgba(22,22,22,1) 0%, rgba(42,42,42,1) 35%, rgba(44,46,46,1) 100%);
 color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 3px solid #000000;
-
+  z-index: inherit;
 }
 
 .nav h1 {
@@ -74,10 +78,10 @@ color: white;
 
 .aside {
   grid-area: 2 / 1 / 4 / 2;
-  background: rgb(27,27,27);
-  background: radial-gradient(circle, rgba(27,27,27,1) 0%, rgba(29,29,29,1) 35%, rgba(46,46,46,1) 100%);
+  background: rgba(27, 27, 27, 0.249);
+  //background: radial-gradient(circle, rgba(27,27,27,1) 0%, rgba(29,29,29,1) 35%, rgba(46,46,46,1) 100%);
   border-right: 3px solid #000000;
-
+  z-index: inherit;
 }
 
 .center {
@@ -86,6 +90,7 @@ color: white;
   justify-content: center;
   align-items: center;
   background-color: beige;
+  z-index: inherit;
 }
 
 .board {
@@ -94,6 +99,7 @@ color: white;
   grid-template-rows: repeat(8, 1fr);
   height: 100%;
   width: 100%;
+  z-index: inherit;
 }
 
 .modal {
@@ -135,6 +141,7 @@ color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: inherit;
 }
 
 
@@ -178,8 +185,9 @@ color: white;
 .footer {
   grid-area: 3 / 2 / 4 / 3;
   background-image: url('./Assets/bobby.png');
-  background-size: cover; /* Adjusts the size of the background image */
+  background-size: cover; // Adjusts the size of the background image
   background-repeat: no-repeat;
   background-position: 50% 45%;
   border-top: 3px solid #000000;
+  z-index: inherit;
 }
