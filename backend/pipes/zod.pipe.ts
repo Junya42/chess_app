@@ -19,7 +19,8 @@ export class ZodValidationPipe implements PipeTransform {
 }
 
 export class ZodListValidationPipe implements PipeTransform {
-  constructor(private schemas: ZodObject<any>[]) {}
+  constructor(private schemas: ZodObject<any>[],
+	private changeValue: (value: unknown) => unknown = (value) => value) {}
   transform(value: unknown, metadata: ArgumentMetadata) {
     let isValid = false;
     for (const schema of this.schemas) {
@@ -32,7 +33,6 @@ export class ZodListValidationPipe implements PipeTransform {
     if (!isValid) {
       throw new BadRequestException('Validation failed');
     }
-
-    return value;
+    return this.changeValue(value);
   }
 }
