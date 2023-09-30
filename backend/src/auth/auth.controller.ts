@@ -7,23 +7,26 @@ import {
   loginUserSchemaByMail,
   loginUserSchemaByUsername,
 } from 'src/user/dto/login-user.dto';
+import { ParseData } from 'src/parse-data/parse-data';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private parseDataService: ParseData,
+  ) {}
 
   @Post('signup')
-  @UsePipes(new ZodValidationPipe([createUserSchema]))
+  @UsePipes(
+    new ZodValidationPipe([createUserSchema], () => this.parseDataService),
+  )
   createUser(@Body() newUser: CreateUserDto) {
     return this.authService.createUser(newUser);
   }
 
   @Post('login')
   @UsePipes(
-    new ZodValidationPipe([
-      loginUserSchemaByMail,
-      loginUserSchemaByUsername,
-    ]),
+    new ZodValidationPipe([loginUserSchemaByMail, loginUserSchemaByUsername]),
   )
   login(@Body() user: LoginUserDto) {
     return this.authService.login(user);
@@ -31,13 +34,9 @@ export class AuthController {
 
   @Post('update')
   @UsePipes(
-    new ZodValidationPipe([
-      loginUserSchemaByMail,
-      loginUserSchemaByUsername,
-    ]),
+    new ZodValidationPipe([loginUserSchemaByMail, loginUserSchemaByUsername]),
   )
   update(@Body() user: LoginUserDto) {
     return this.authService.login(user);
   }
-
 }
