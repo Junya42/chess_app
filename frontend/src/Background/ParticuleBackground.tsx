@@ -1,42 +1,29 @@
-import React, { useEffect } from 'react';
-import { createNoise2D, createNoise3D } from 'simplex-noise';
+import React, { useEffect } from "react";
+import { createNoise2D, createNoise3D } from "simplex-noise";
 import {
-  PI,
   cos,
   sin,
-  abs,
-  sqrt,
-  pow,
-  random,
-  atan2,
-  HALF_PI,
   TAU,
-  TO_RAD,
-  floor,
   rand,
-  randIn,
   randRange,
   fadeInOut,
-  dist,
-  angle,
   lerp,
-} from './backgroundUtils'; // Update the path to backgroundUtils
+} from "./backgroundUtils"; // Update the path to backgroundUtils
 
 const ParticleBackground: React.FC = () => {
   let container: HTMLElement | null = null;
-  let canvas: { a: HTMLCanvasElement | null; b: HTMLCanvasElement | null } = { a: null, b: null };
-  let ctx: { a: CanvasRenderingContext2D | null; b: CanvasRenderingContext2D | null } = { a: null, b: null };
+  let canvas: { a: HTMLCanvasElement | null; b: HTMLCanvasElement | null } = {
+    a: null,
+    b: null,
+  };
+  let ctx: {
+    a: CanvasRenderingContext2D | null;
+    b: CanvasRenderingContext2D | null;
+  } = { a: null, b: null };
   let center: number[] = [];
-  let gradient: CanvasGradient;
   let tick: number = 0;
   let simplex: any; // Adjust the type accordingly
   let particleProps: Float32Array;
-  let positions: number[];
-  let velocities: number[];
-  let lifeSpans: number[];
-  let speeds: number[];
-  let sizes: number[];
-  let hues: number[];
 
   const particleCount: number = 700;
   const particlePropCount: number = 9;
@@ -54,7 +41,7 @@ const ParticleBackground: React.FC = () => {
   const xOff: number = 0.00125;
   const yOff: number = 0.00125;
   const zOff: number = 0.0005;
-  const backgroundColor: string = 'hsla(260,40%,5%,1)';
+  const backgroundColor: string = "hsla(260,40%,5%,1)";
 
   const setup = () => {
     createCanvas();
@@ -104,14 +91,14 @@ const ParticleBackground: React.FC = () => {
       i7: number = 6 + i,
       i8: number = 7 + i,
       i9: number = 8 + i;
-	let x: number;
-	let y: number;
+    let x: number;
+    let y: number;
     let vx, vy, life, ttl, speed, x2, y2, radius, hue;
 
     x = particleProps[i];
     y = particleProps[i2];
 
-	const noise3d = createNoise3D();
+    const noise3d = createNoise3D();
     const n = noise3d(x * xOff, y * yOff, tick * zOff) * noiseSteps * TAU;
     vx = lerp(particleProps[i3], cos(n), 0.5);
     vy = lerp(particleProps[i4], sin(n), 0.5);
@@ -136,10 +123,19 @@ const ParticleBackground: React.FC = () => {
     (checkBounds(x, y) || life > ttl) && initParticle(i);
   };
 
-  const drawParticle = (x: number, y: number, x2: number, y2: number, life: number, ttl: number, radius: number, hue: number) => {
+  const drawParticle = (
+    x: number,
+    y: number,
+    x2: number,
+    y2: number,
+    life: number,
+    ttl: number,
+    radius: number,
+    hue: number
+  ) => {
     if (ctx.a === null || ctx.b === null) return;
     ctx.a!.save();
-    ctx.a!.lineCap = 'round';
+    ctx.a!.lineCap = "round";
     ctx.a!.lineWidth = radius;
     ctx.a!.strokeStyle = `hsla(${hue},100%,60%,${fadeInOut(life, ttl)})`;
     ctx.a!.beginPath();
@@ -155,15 +151,16 @@ const ParticleBackground: React.FC = () => {
   };
 
   const createCanvas = () => {
-    container = document.querySelector('.content--canvas');
+    container = document.querySelector(".content--canvas");
     canvas = {
-      a: document.createElement('canvas'),
-      b: document.createElement('canvas'),
+      a: document.createElement("canvas"),
+      b: document.createElement("canvas"),
     };
 
-	if (!canvas || !canvas.a || !canvas.b)
-		return;
+    if (!canvas || !canvas.a || !canvas.b) return;
+    canvas.a.style.zIndex = "-1";
     canvas.b.style.cssText = `
+      z-index: -1;
       position: fixed;
       top: 0;
       left: 0;
@@ -174,8 +171,8 @@ const ParticleBackground: React.FC = () => {
     if (!container) return;
     container.appendChild(canvas.b);
     ctx = {
-      a: canvas.a!.getContext('2d'),
-      b: canvas.b!.getContext('2d'),
+      a: canvas.a!.getContext("2d"),
+      b: canvas.b!.getContext("2d"),
     };
     center = [];
   };
@@ -201,14 +198,14 @@ const ParticleBackground: React.FC = () => {
   const renderGlow = () => {
     if (ctx.a === null || ctx.b === null) return;
     ctx.b!.save();
-    ctx.b!.filter = 'blur(8px) brightness(200%)';
-    ctx.b!.globalCompositeOperation = 'lighter';
+    ctx.b!.filter = "blur(8px) brightness(200%)";
+    ctx.b!.globalCompositeOperation = "lighter";
     ctx.b!.drawImage(canvas.a!, 0, 0);
     ctx.b!.restore();
 
     ctx.b!.save();
-    ctx.b!.filter = 'blur(4px) brightness(200%)';
-    ctx.b!.globalCompositeOperation = 'lighter';
+    ctx.b!.filter = "blur(4px) brightness(200%)";
+    ctx.b!.globalCompositeOperation = "lighter";
     ctx.b!.drawImage(canvas.a!, 0, 0);
     ctx.b!.restore();
   };
@@ -216,13 +213,14 @@ const ParticleBackground: React.FC = () => {
   const renderToScreen = () => {
     if (ctx.a === null || ctx.b === null) return;
     ctx.b!.save();
-    ctx.b!.globalCompositeOperation = 'lighter';
+    ctx.b!.globalCompositeOperation = "lighter";
     ctx.b!.drawImage(canvas.a!, 0, 0);
     ctx.b!.restore();
   };
 
   const draw = () => {
     if (ctx.a === null || ctx.b === null) return;
+    if (canvas === null || canvas.a === null || canvas.b === null) return;
     tick++;
 
     ctx.a!.clearRect(0, 0, canvas.a!.width, canvas.a!.height);
@@ -241,14 +239,14 @@ const ParticleBackground: React.FC = () => {
     setup();
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
   return (
-    <div className="content--canvas">
-      <canvas id="canvasA" ref={(el) => (canvas.a = el)} />
-      <canvas id="canvasB" ref={(el) => (canvas.b = el)} />
+    <div className="content--canvas -z-1">
+      <canvas className="-z-1" id="canvasA" ref={(el) => (canvas.a = el)} />
+      <canvas className="-z-1" id="canvasB" ref={(el) => (canvas.b = el)} />
     </div>
   );
 };

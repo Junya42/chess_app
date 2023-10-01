@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Button } from "@chakra-ui/react";
 import {
   Modal,
   ModalOverlay,
@@ -7,19 +6,18 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
 } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import SignupForm from "./SignupForm";
+import Signin from "../Signin/Signin";
 
 export default function Signup() {
   const OverlayOne = () => (
     <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
   );
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen } = useDisclosure();
+  const [toSignin, setToSignin] = useState<boolean>(false);
 
   useEffect(() => {
     onOpen();
@@ -29,15 +27,34 @@ export default function Signup() {
     };
   }, []);
 
+  if (toSignin) return <Signin setToSignin={setToSignin} />;
+
   return (
     <>
       <Modal isCentered isOpen={isOpen} onClose={() => {}}>
         <OverlayOne />
         <ModalContent>
-          <ModalHeader>Sign up</ModalHeader>
+          <ModalHeader display="flex" justifyContent="center">
+            <div>Sign Up</div>
+          </ModalHeader>
           <ModalBody>
             <SignupForm />
           </ModalBody>
+          <ModalFooter
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <div className="px-1">Already a User?</div>
+            <button
+              className="px-1 hover:text-purple-700"
+              onClick={() => {
+                setToSignin(true);
+              }}
+            >
+              Sign In
+            </button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

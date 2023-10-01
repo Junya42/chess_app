@@ -1,7 +1,7 @@
 export default function Ai() {
 
     return (
-        <div className="center">
+        <div>
             <h1>Ai</h1>
         </div>
     );

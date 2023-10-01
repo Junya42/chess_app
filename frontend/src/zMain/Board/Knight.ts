@@ -2,7 +2,6 @@ import { Piece } from "./Piece";
 import WhiteKnight from "./Assets/WhiteKnight.png";
 import BlackKnight from "./Assets/BlackKnight.png";
 import { Chessboard } from "./Chessboard";
-import { DIRECTION } from "./Direction";
 
 export class Knight extends Piece {
   constructor(

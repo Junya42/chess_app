@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { FormControl, Input, Button } from "@chakra-ui/react";
-import { ApiSignup } from "../../Api/userAPI";
+import { ApiSignin } from "../../Api/userAPI";
 
 export default function SignupForm() {
   const {
@@ -11,24 +11,8 @@ export default function SignupForm() {
   } = useForm();
 
   return (
-    <form onSubmit={handleSubmit(ApiSignup)}>
+    <form onSubmit={handleSubmit(ApiSignin)}>
       <FormControl>
-        <Input
-          mt={4}
-          id="email"
-          type="email"
-          isInvalid={errors.email ? true : false}
-          focusBorderColor={
-            errors.email ? "crimson" : "rgba(66, 153, 225, 0.6)"
-          }
-          errorBorderColor="crimson"
-          placeholder={
-            errors.email ? `${errors.email.message}` : "E-mail Address"
-          }
-          {...register("email", {
-            required: "E-mail Address required",
-          })}
-        />
         <Input
           mt={4}
           id="username"
@@ -74,11 +58,6 @@ export default function SignupForm() {
             const inputs = [
               {
                 type: "manual",
-                name: "email",
-                message: "email error",
-              },
-              {
-                type: "manual",
                 name: "username",
                 message: "Username error",
               },
@@ -94,7 +73,7 @@ export default function SignupForm() {
             });
           }}
         >
-          SIGN UP
+          SIGN IN
         </Button>
       </div>
     </form>
