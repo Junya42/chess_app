@@ -1,5 +1,4 @@
 import "../App.scss";
-import { useState } from "react";
 import Signup from "../Modals/Signup/Signup";
 import ParticleBackground from "../Background/ParticuleBackground";
 

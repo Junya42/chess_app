@@ -147,7 +147,6 @@ export default function Board(): React.ReactElement {
 
   return (
     <>
-      <div className="center">
         <div
           className="board"
           style={{
@@ -163,7 +162,6 @@ export default function Board(): React.ReactElement {
           {checkmate && ResetModal()}
           {renderTiles()}
         </div>
-      </div>
     </>
   );
 }

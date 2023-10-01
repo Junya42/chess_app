@@ -6,12 +6,13 @@ import MainManager from "./zMain/MainManager";
 import Signup from "./Modals/Signup/Signup";
 import { Avatar, Box, ButtonGroup, IconButton } from "@chakra-ui/react";
 import { AiOutlineLogout } from "react-icons/ai";
-import { CiSettings } from "react-icons/ci";*/
-import { useMemo, useState } from "react";
+import { CiSettings } from "react-icons/ci";
+import { useState } from "react";*/
+import { useMemo } from "react";
 import ParticleBackground from "./Background/ParticuleBackground";
 import UserBar from "./Components/Userbar/UserBar";
 import Sidebar from "./Components/Sidebar/Sidebar";
-
+import Main from "./Components/Main/Main";
 
 function App() {
   //const [page, setPage] = useState<string>("Home");
@@ -36,7 +37,8 @@ function App() {
     <div className="All">
       <div className="App">
         <UserBar />
-		<Sidebar />
+        <Sidebar />
+        <Main />
       </div>
       {particleBackground}
     </div>

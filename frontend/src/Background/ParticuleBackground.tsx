@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { createNoise2D, createNoise3D } from "simplex-noise";
+import { createNoise3D } from "simplex-noise";
 import {
   cos,
   sin,
@@ -22,7 +22,6 @@ const ParticleBackground: React.FC = () => {
   } = { a: null, b: null };
   let center: number[] = [];
   let tick: number = 0;
-  let simplex: any; // Adjust the type accordingly
   let particleProps: Float32Array;
 
   const particleCount: number = 700;
@@ -52,7 +51,6 @@ const ParticleBackground: React.FC = () => {
 
   const initParticles = () => {
     tick = 0;
-    simplex = createNoise2D();
     particleProps = new Float32Array(particlePropsLength);
 
     for (let i: number = 0; i < particlePropsLength; i += particlePropCount) {
@@ -241,7 +239,7 @@ const ParticleBackground: React.FC = () => {
     return () => {
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, );
 
   return (
     <div className="content--canvas -z-1">

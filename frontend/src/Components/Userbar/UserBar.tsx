@@ -17,7 +17,6 @@ const UserBar = () => {
       <div className="w-full grid justify-center">
         <p className="text-white text-lg px-10em">{username}</p>
         <ButtonGroup className="px-10em">
-          <motion.button whileHover={{ rotate: -90 }}>
             <IconButton
               aria-label="Logout"
               colorScheme="whiteAlpha"
@@ -26,12 +25,11 @@ const UserBar = () => {
                 borderColor: "red.400",
                 color: "red.400",
               }}
+              className="hover:-rotate-90"
               onClick={handleLogout}
             >
               <AiOutlineLogout />
             </IconButton>
-          </motion.button>
-          <motion.button whileHover={{ rotate: 360}}>
             <IconButton
               aria-label="Settings"
               colorScheme="whiteAlpha"
@@ -40,7 +38,6 @@ const UserBar = () => {
             >
               <CiSettings />
             </IconButton>
-          </motion.button>
         </ButtonGroup>
       </div>
       <Avatar

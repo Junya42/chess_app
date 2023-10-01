@@ -25,7 +25,7 @@ export default function Signup() {
     return () => {
       onOpen();
     };
-  }, []);
+  },);
 
   if (toSignin) return <Signin setToSignin={setToSignin} />;
 
