@@ -15,6 +15,7 @@ const config_1 = require("@nestjs/config");
 const config_2 = require("../config/config");
 const auth_module_1 = require("./auth/auth.module");
 const prisma_module_1 = require("./prisma/prisma.module");
+const parse_data_module_1 = require("./parse-data/parse-data.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -28,6 +29,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             user_module_1.UserModule,
             prisma_module_1.PrismaModule,
+            parse_data_module_1.ParseDataModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

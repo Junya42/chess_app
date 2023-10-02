@@ -1,25 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZodListValidationPipe = exports.ZodValidationPipe = void 0;
+exports.ZodValidationPipe = void 0;
 const common_1 = require("@nestjs/common");
 class ZodValidationPipe {
-    constructor(schema) {
-        this.schema = schema;
-    }
-    transform(value, metadata) {
-        try {
-            this.schema.parse(value);
-        }
-        catch (error) {
-            throw new common_1.BadRequestException('Validation failed');
-        }
-        return value;
-    }
-}
-exports.ZodValidationPipe = ZodValidationPipe;
-class ZodListValidationPipe {
-    constructor(schemas) {
+    constructor(schemas, changeValue) {
         this.schemas = schemas;
+        this.changeValue = changeValue;
     }
     transform(value, metadata) {
         let isValid = false;
@@ -34,8 +20,10 @@ class ZodListValidationPipe {
         if (!isValid) {
             throw new common_1.BadRequestException('Validation failed');
         }
+        if (this.changeValue)
+            return this.changeValue(value);
         return value;
     }
 }
-exports.ZodListValidationPipe = ZodListValidationPipe;
+exports.ZodValidationPipe = ZodValidationPipe;
 //# sourceMappingURL=zod.pipe.js.map

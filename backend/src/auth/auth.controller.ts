@@ -13,12 +13,11 @@ import { ParseData } from 'src/parse-data/parse-data';
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private parseDataService: ParseData,
   ) {}
 
   @Post('signup')
   @UsePipes(
-    new ZodValidationPipe([createUserSchema], () => this.parseDataService),
+    new ZodValidationPipe([createUserSchema]),
   )
   createUser(@Body() newUser: CreateUserDto) {
 	console.log("Trying to create a user");

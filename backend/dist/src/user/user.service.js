@@ -31,7 +31,6 @@ let UserService = class UserService {
             return newUser;
         }
         catch (error) {
-            console.log(error);
             throw new common_1.HttpException({
                 status: common_1.HttpStatus.CONFLICT,
                 error: 'This email or username already in use',
@@ -47,10 +46,11 @@ let UserService = class UserService {
         else
             whereData.username = userInfo.username;
         try {
-            return this.prisma.user.findUniqueOrThrow({
+            const res = await this.prisma.user.findUniqueOrThrow({
                 where: whereData,
                 select: { id: true, username: true },
             });
+            return res;
         }
         catch (error) {
             throw new common_1.HttpException({

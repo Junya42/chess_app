@@ -10,4 +10,7 @@ export declare class AuthController {
     login(user: LoginUserDto): Promise<{
         access_token: string;
     }>;
+    update(user: LoginUserDto): Promise<{
+        access_token: string;
+    }>;
 }

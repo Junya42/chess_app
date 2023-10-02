@@ -29,11 +29,14 @@ let AuthController = class AuthController {
     login(user) {
         return this.authService.login(user);
     }
+    update(user) {
+        return this.authService.login(user);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
     (0, common_1.Post)('signup'),
-    (0, common_1.UsePipes)(new zod_pipe_1.ZodValidationPipe(create_user_dto_1.createUserSchema)),
+    (0, common_1.UsePipes)(new zod_pipe_1.ZodValidationPipe([create_user_dto_1.createUserSchema])),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -41,15 +44,20 @@ __decorate([
 ], AuthController.prototype, "createUser", null);
 __decorate([
     (0, common_1.Post)('login'),
-    (0, common_1.UsePipes)(new zod_pipe_1.ZodListValidationPipe([
-        login_user_dto_1.loginUserSchemaByMail,
-        login_user_dto_1.loginUserSchemaByUsername,
-    ])),
+    (0, common_1.UsePipes)(new zod_pipe_1.ZodValidationPipe([login_user_dto_1.loginUserSchemaByMail, login_user_dto_1.loginUserSchemaByUsername])),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('update'),
+    (0, common_1.UsePipes)(new zod_pipe_1.ZodValidationPipe([login_user_dto_1.loginUserSchemaByMail, login_user_dto_1.loginUserSchemaByUsername])),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "update", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
