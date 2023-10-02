@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { createNoise3D } from "simplex-noise";
 import {
   cos,
@@ -10,7 +10,14 @@ import {
   lerp,
 } from "./backgroundUtils"; // Update the path to backgroundUtils
 
-const ParticleBackground: React.FC = () => {
+interface backgroundProps {
+  hueState: number;
+  saturationState: number;
+  lightnessState: number;
+  alphaState: number;
+}
+
+function ParticleBackground({hueState, saturationState, lightnessState, alphaState}: backgroundProps) {
   let container: HTMLElement | null = null;
   let canvas: { a: HTMLCanvasElement | null; b: HTMLCanvasElement | null } = {
     a: null,
@@ -34,13 +41,13 @@ const ParticleBackground: React.FC = () => {
   const rangeSpeed: number = 2;
   const baseRadius: number = 1;
   const rangeRadius: number = 4;
-  const baseHue: number = 220;
+  const baseHue: number = hueState;
   const rangeHue: number = 100;
   const noiseSteps: number = 8;
   const xOff: number = 0.00125;
   const yOff: number = 0.00125;
   const zOff: number = 0.0005;
-  const backgroundColor: string = "hsla(260,40%,5%,1)";
+  const backgroundColor: string = `hsla(${hueState},${saturationState}%,${lightnessState}%, ${alphaState})`;
 
   const setup = () => {
     createCanvas();

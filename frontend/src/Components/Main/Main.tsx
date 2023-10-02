@@ -30,8 +30,8 @@ export default function Main() {
         }}
         className={ChildClass}
       >
-		<Board />
-	  </div>
+        <Board />
+      </div>
       <Slider
         min={30}
         max={55}

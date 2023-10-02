@@ -9,7 +9,7 @@ function Auth() {
 		<div className="App">
 			<Signup />
 		</div>
-		<ParticleBackground />
+		<ParticleBackground hueState={240} saturationState={40} lightnessState={5} alphaState={1}/>
 	</div>
   )
 }
