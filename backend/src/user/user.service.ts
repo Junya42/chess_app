@@ -18,7 +18,6 @@ export class UserService {
       });
       return newUser;
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         {
           status: HttpStatus.CONFLICT,
@@ -37,10 +36,11 @@ export class UserService {
     if ('email' in userInfo) whereData.email = userInfo.email;
     else whereData.username = userInfo.username;
     try {
-      return this.prisma.user.findUniqueOrThrow({
+      const res = await this.prisma.user.findUniqueOrThrow({
         where: whereData,
         select: { id: true, username: true },
       });
+      return res;
     } catch (error) {
       throw new HttpException(
         {
