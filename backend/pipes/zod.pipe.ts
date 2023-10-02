@@ -6,21 +6,10 @@ import {
 import { ZodObject } from 'zod';
 
 export class ZodValidationPipe implements PipeTransform {
-  constructor(private schema: ZodObject<any>) {}
-
-  transform(value: unknown, metadata: ArgumentMetadata) {
-    try {
-      this.schema.parse(value);
-    } catch (error) {
-      throw new BadRequestException('Validation failed');
-    }
-    return value;
-  }
-}
-
-export class ZodListValidationPipe implements PipeTransform {
-  constructor(private schemas: ZodObject<any>[],
-	private changeValue: (value: unknown) => unknown = (value) => value) {}
+  constructor(
+    private schemas: ZodObject<any>[],
+    private changeValue?: (value: any) => any,
+  ) {}
   transform(value: unknown, metadata: ArgumentMetadata) {
     let isValid = false;
     for (const schema of this.schemas) {
@@ -33,6 +22,7 @@ export class ZodListValidationPipe implements PipeTransform {
     if (!isValid) {
       throw new BadRequestException('Validation failed');
     }
-    return this.changeValue(value);
+    if (this.changeValue) return this.changeValue(value);
+    return value;
   }
 }
