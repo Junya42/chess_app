@@ -1,16 +1,16 @@
 import { Body, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Role } from '@prisma/client';
 import { CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginUserDto } from './dto/login-user.dto';
+import { UserRepository } from './repository/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private userRepo: UserRepository) {}
 
   async create(@Body() newUserObj: CreateUserDto) {
     try {
-      const newUser = await this.prisma.user.create({
+      const newUser = await this.userRepo.create({
         data: {
           ...newUserObj,
           role: Role.USER,
@@ -36,11 +36,13 @@ export class UserService {
     if ('email' in userInfo) whereData.email = userInfo.email;
     else whereData.username = userInfo.username;
     try {
-      const res = await this.prisma.user.findUniqueOrThrow({
+      const res = await this.userRepo.getUsers({
         where: whereData,
         select: { id: true, username: true },
       });
-      return res;
+      if (res.length != 1)
+        throw new Error("error when fetching user")
+      return res[0];
     } catch (error) {
       throw new HttpException(
         {
@@ -54,4 +56,9 @@ export class UserService {
       );
     }
   }
+
+  // async update(@Body())
+  // {
+
+  // }
 }

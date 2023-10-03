@@ -15,8 +15,9 @@ export class AuthService {
   }
 
   async login(@Body() user: LoginUserDto) {
-    const logUser = await this.userService.login(user);
-    const payload = { sub: logUser.id, username: logUser.username };
+    const userLogged = await this.userService.login(user);
+    console.log(`User ${userLogged.username} is succefully logged!`)
+    const payload = { sub: userLogged.id, username: userLogged.username };
     return { access_token: await this.jwt.signAsync(payload) };
   }
 }

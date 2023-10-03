@@ -29,7 +29,8 @@ export class AuthController {
     new ZodValidationPipe([loginUserSchemaByMail, loginUserSchemaByUsername]),
   )
   login(@Body() user: LoginUserDto) {
-    return this.authService.login(user);
+    const userlogged = this.authService.login(user);
+    return userlogged
   }
 
   @Post('update')
