@@ -3,29 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-/*import { 
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";*/
-//import Profile from './Profile/Profile';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react'
+import Auth from './Auth/Auth';
 
-/*const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />
-  },
-  {
-    path: "/Profile",
-    element: <Profile />
-  }
-]);*/
-
+const router = createBrowserRouter([
+	{
+		path: "/",
+		element: sessionStorage.getItem("access_token") == null ? <Auth /> : <App />
+	},
+	{
+		path: "/App",
+		element: <App />
+	}
+]);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <App />
+  <ChakraProvider>
+    <RouterProvider router={router} />
+  </ChakraProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
