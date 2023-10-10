@@ -5,7 +5,7 @@ class Tiles {
     constructor() {
       // Initialize the tile colors and original colors
       this.tileColors = Array.from(Array(8), (row, i) =>
-        Array.from(Array(8), (col, j) => (i + j) % 2 === 0 ? 'black' : 'white')
+        Array.from(Array(8), (col, j) => (i + j) % 2 === 0 ? 'white' : 'black')
       );
       this.originalColors = Array.from(this.tileColors, row => [...row]);
     }
